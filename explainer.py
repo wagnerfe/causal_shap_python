@@ -7,7 +7,7 @@ from feature_combinations import feature_combinations, feature_matrix, weight_ma
 from prepare_data_causal import prepare_data_causal
 from shap import Explanation
 import sys
-import torch
+#import torch
 import math
 import random
 
@@ -86,6 +86,7 @@ class Explainer:
         return str(self.__class__) + ": " + str(self.__dict__)
 
     def predict_model(self, model, data):
+        """
         if self.model_type == "pytorch":
             # Do this in batches to avoid loading a dataset that is too big to memory.
             batch_size = 2000
@@ -105,7 +106,8 @@ class Explainer:
             sys.exit("Tensorflow not yet supported")
 
         else:
-            prediction = model.predict(data)
+        """    
+        prediction = model.predict(data)
 
         return prediction
 
@@ -224,7 +226,8 @@ class Explainer:
                 dt.loc[dt.id_combination == 0, 'p_hat_'+str(i)] = float(prediction_zero[i])
         else:
             dt['p_hat_'+str(0)] = p_hat[:]
-            dt.loc[dt.id_combination == 0, 'p_hat_'+str(0)] = float(prediction_zero[0])
+            #dt.loc[dt.id_combination == 0, 'p_hat_'+str(0)] = float(prediction_zero[0])
+            dt.loc[dt.id_combination == 0, 'p_hat_'+str(0)] = float(prediction_zero)
 
 
         p_all = self.predict_model(self.model, self.x_test)
